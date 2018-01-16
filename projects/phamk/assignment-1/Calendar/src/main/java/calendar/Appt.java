@@ -116,7 +116,7 @@ public class Appt implements  Comparable<Appt>{
     		this.valid=false;
     	else
         	if(startMinute<0 || startMinute>59)
-        		this.valid=false;
+                this.valid=true; //BUG ADDED: switched from FALSE
         	else
             	if(startDay<1 || startDay>NumDaysInMonth)
             		this.valid=false;
@@ -135,7 +135,7 @@ public class Appt implements  Comparable<Appt>{
     	 isValid();
     }
     
-    /** Sets startHour */
+    /** Sets startMinute */
     public void setStartMinute(int startMinute) {   	
         this.startMinute = startMinute;
         isValid();

@@ -102,7 +102,7 @@ public class CalendarMain {
          listAppts.add(appt);
          // create another appointment
          startHour=16;
-		 startMinute=30;
+         startMinute=30;
 		 startDay=thisDay+1;		
 		 startMonth=thisMonth+1;	
 		 startYear=thisYear;	
@@ -145,8 +145,8 @@ public class CalendarMain {
 		String tomorrowDate=tomorrow.get(Calendar.MONTH)+ "/"+ tomorrow.get(Calendar.DAY_OF_MONTH)+"/"+tomorrow.get(Calendar.YEAR);
 
 		if(diagnose){
-			System.out.println("today is:" + todatDate);
-			System.out.println("tomorrow is:" + tomorrowDate);
+            System.out.println("today is:" + tomorrowDate); //BUG ADDED: SWAPPED tomorrowDate AND todatDate
+			System.out.println("tomorrow is:" + todatDate);
 		}
 		
 		TimeTable timeTable=new TimeTable();

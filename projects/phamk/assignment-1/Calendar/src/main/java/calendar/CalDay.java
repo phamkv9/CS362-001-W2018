@@ -72,7 +72,7 @@ public class CalDay {
 	 */
 	public void addAppt(Appt appt) {
 		if (appt.getValid()) {
-			for (int i = 0; i < getAppts().size(); i++) {
+            for (int i = 1; i < getAppts().size(); i++) { //BUG ADDED: was i = 1
 				//Put the appointment in the correct order - finish this
 				if (((Appt)getAppts().get(i)).getStartHour() >
 										appt.getStartHour()) {

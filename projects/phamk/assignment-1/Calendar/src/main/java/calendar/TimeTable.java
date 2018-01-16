@@ -50,7 +50,7 @@ public class TimeTable {
 	        }
 	        
 	        //Retrieve the appts - <appt> 
-		for (int i = 0; i < appts.size(); i++) {
+          for (int i = 1; i < appts.size(); i++) { // BUG ADDED: was i = 0
 			Appt appt=appts.get(i);
 			if(!appt.getValid()) continue;
 			// Figure out which days the appointment occurs on
@@ -60,7 +60,7 @@ public class TimeTable {
 			// For each day in the list, calculate the difference between the
 			// first day and the day of occurrence and add the appointment to
 			// the correct CalDay
-			int daysDifference = 0;
+              int daysDifference = 1; // BUG ADDED: was = 0
 			nextDay = (GregorianCalendar) firstDay.clone();
 			Iterator<GregorianCalendar> itr = apptOccursOnDays.iterator();
 			while (itr.hasNext()) {
