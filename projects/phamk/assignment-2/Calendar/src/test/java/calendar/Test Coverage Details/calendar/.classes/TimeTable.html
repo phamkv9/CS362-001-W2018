@@ -1,0 +1,326 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: TimeTable</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">calendar</a> ]
+</div>
+
+<h1>Coverage Summary for Class: TimeTable (calendar)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">TimeTable</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (6/ 6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    72%
+  </span>
+  <span class="absValue">
+    (59/ 82)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;
+<i>2</i>&nbsp;/*
+<i>3</i>&nbsp; * TimeTable.java
+<i>4</i>&nbsp; *
+<i>5</i>&nbsp; */
+<i>6</i>&nbsp;package calendar;
+<i>7</i>&nbsp;/**
+<i>8</i>&nbsp; * 
+<i>9</i>&nbsp;* This class collects appointments between given two dates.
+<i>10</i>&nbsp;* 
+<i>11</i>&nbsp;*/
+<i>12</i>&nbsp;
+<i>13</i>&nbsp;import java.util.*;
+<i>14</i>&nbsp;
+<i>15</i>&nbsp;
+<i>16</i>&nbsp;public class TimeTable {
+<i>17</i>&nbsp;
+<i>18</i>&nbsp;	
+<b class="fc"><i>19</i>&nbsp;    public TimeTable() {</b>
+<i>20</i>&nbsp;
+<b class="fc"><i>21</i>&nbsp;    }</b>
+<i>22</i>&nbsp;	
+<i>23</i>&nbsp;    
+<i>24</i>&nbsp;    /**
+<i>25</i>&nbsp;     * Retrieves a range of appointments between two dates.
+<i>26</i>&nbsp;     * @return A list of all of the CalDays between firstDate (inclusive)
+<i>27</i>&nbsp;     *  and lastDate (exclusive) with their respective appointments. 
+<i>28</i>&nbsp;     * @throws DateOutOfRangeException If any of the days constructed by the
+<i>29</i>&nbsp;     *  given values are invalid, or if lastDay is not after firstDay.
+<i>30</i>&nbsp;     **/
+<i>31</i>&nbsp;	  public LinkedList&lt;CalDay&gt; getApptRange(LinkedList&lt;Appt&gt; appts,GregorianCalendar firstDay, GregorianCalendar lastDay)throws DateOutOfRangeException{
+<i>32</i>&nbsp;		  
+<i>33</i>&nbsp;		     //Create a linked list of calendar days &lt;CalDay&gt; to return
+<b class="fc"><i>34</i>&nbsp;	        LinkedList&lt;CalDay&gt; calDays = new LinkedList&lt;CalDay&gt;();</b>
+<i>35</i>&nbsp;	     
+<i>36</i>&nbsp;
+<i>37</i>&nbsp;	        
+<i>38</i>&nbsp;	        //Make sure that the first day is before the last day
+<b class="fc"><i>39</i>&nbsp;	        if (!firstDay.before(lastDay)) {</b>
+<b class="fc"><i>40</i>&nbsp;	        	throw new DateOutOfRangeException (&quot;Second date specified is not  before the first date specified.&quot;);</b>
+<i>41</i>&nbsp;	        }
+<i>42</i>&nbsp;	        
+<i>43</i>&nbsp;	        
+<i>44</i>&nbsp;	        //Create the first CalDay object with the starting date and add to list
+<b class="fc"><i>45</i>&nbsp;	        GregorianCalendar nextDay = (GregorianCalendar) firstDay.clone();</b>
+<b class="fc"><i>46</i>&nbsp;	        while (nextDay.before(lastDay)) {</b>
+<i>47</i>&nbsp;
+<b class="fc"><i>48</i>&nbsp;	            calDays.add(new CalDay(nextDay));</b>
+<b class="fc"><i>49</i>&nbsp;	            nextDay.add(nextDay.DAY_OF_MONTH, 1);</b>
+<i>50</i>&nbsp;	        }
+<i>51</i>&nbsp;	        
+<i>52</i>&nbsp;	        //Retrieve the appts - &lt;appt&gt; 
+<b class="fc"><i>53</i>&nbsp;        for (int i = 1; i &lt; appts.size(); i++) { //BUG ADDED: ORIGINAL WAS I = 0</b>
+<b class="fc"><i>54</i>&nbsp;			Appt appt=appts.get(i);</b>
+<b class="fc"><i>55</i>&nbsp;			if(!appt.getValid()) continue;</b>
+<i>56</i>&nbsp;			// Figure out which days the appointment occurs on
+<b class="fc"><i>57</i>&nbsp;			LinkedList&lt;GregorianCalendar&gt; apptOccursOnDays = getApptOccurences(</b>
+<i>58</i>&nbsp;					appt, firstDay, lastDay);
+<i>59</i>&nbsp;
+<i>60</i>&nbsp;			// For each day in the list, calculate the difference between the
+<i>61</i>&nbsp;			// first day and the day of occurrence and add the appointment to
+<i>62</i>&nbsp;			// the correct CalDay
+<b class="fc"><i>63</i>&nbsp;         int daysDifference = 1; // BUG ADDED ORGINAL = 0;</b>
+<b class="fc"><i>64</i>&nbsp;			nextDay = (GregorianCalendar) firstDay.clone();</b>
+<b class="fc"><i>65</i>&nbsp;			Iterator&lt;GregorianCalendar&gt; itr = apptOccursOnDays.iterator();</b>
+<b class="fc"><i>66</i>&nbsp;			while (itr.hasNext()) {</b>
+<b class="fc"><i>67</i>&nbsp;				GregorianCalendar apptOccursOn = (GregorianCalendar) itr.next();</b>
+<i>68</i>&nbsp;
+<b class="fc"><i>69</i>&nbsp;				while (nextDay.before(apptOccursOn)) {</b>
+<b class="fc"><i>70</i>&nbsp;					daysDifference++;</b>
+<b class="fc"><i>71</i>&nbsp;					nextDay.add(nextDay.DAY_OF_MONTH, 1);</b>
+<i>72</i>&nbsp;				}
+<i>73</i>&nbsp;
+<b class="fc"><i>74</i>&nbsp;				CalDay calDayOfAppt = (CalDay) calDays.get(daysDifference);</b>
+<b class="nc"><i>75</i>&nbsp;				calDayOfAppt.addAppt(appt);</b>
+<i>76</i>&nbsp;
+<b class="nc"><i>77</i>&nbsp;			}</b>
+<i>78</i>&nbsp;
+<i>79</i>&nbsp;		}
+<b class="fc"><i>80</i>&nbsp;		  return calDays;</b>
+<i>81</i>&nbsp;	  }
+<i>82</i>&nbsp;	   /**
+<i>83</i>&nbsp;	     * This takes the given appointment and constructs a linked list of 
+<i>84</i>&nbsp;	     * GregorianCalendar&#39;s, each of which represent a day when the appointment
+<i>85</i>&nbsp;	     * occurs. The days are guaranteed to be between firstDay (inclusive) and
+<i>86</i>&nbsp;	     * lastDay (exclusive). They are guaranteed to be in order.
+<i>87</i>&nbsp;	     **/
+<i>88</i>&nbsp;	    private static LinkedList&lt;GregorianCalendar&gt; getApptOccurences(Appt appt, 
+<i>89</i>&nbsp;	        GregorianCalendar firstDay, GregorianCalendar lastDay) {
+<i>90</i>&nbsp;	        
+<b class="fc"><i>91</i>&nbsp;	        LinkedList&lt;GregorianCalendar&gt; result = new LinkedList&lt;GregorianCalendar&gt;();</b>
+<i>92</i>&nbsp;	        
+<i>93</i>&nbsp;	        //Make sure that the firstDay is before the last day
+<b class="fc"><i>94</i>&nbsp;	        if (!firstDay.before(lastDay)) {</b>
+<b class="nc"><i>95</i>&nbsp;	            return result;</b>
+<i>96</i>&nbsp;	        }
+<i>97</i>&nbsp;	        
+<i>98</i>&nbsp;	        //Get the first recurrence taken care of
+<b class="fc"><i>99</i>&nbsp;	        GregorianCalendar occurrenceDay = </b>
+<b class="fc"><i>100</i>&nbsp;	                new GregorianCalendar(appt.getStartYear(), appt.getStartMonth(), </b>
+<b class="fc"><i>101</i>&nbsp;	                    appt.getStartDay());</b>
+<i>102</i>&nbsp;	        
+<i>103</i>&nbsp;	        //If the first occurrence is after the last day, then it doesn&#39;t matter
+<i>104</i>&nbsp;	        //when it recurs because those dates must be after the last day too
+<b class="fc"><i>105</i>&nbsp;	        if (!occurrenceDay.before(lastDay)) {</b>
+<b class="fc"><i>106</i>&nbsp;	            return result;</b>
+<i>107</i>&nbsp;	        }
+<i>108</i>&nbsp;	        
+<i>109</i>&nbsp;	            
+<i>110</i>&nbsp;
+<i>111</i>&nbsp;	            //Make sure that there is a limited number of recurrences
+<b class="fc"><i>112</i>&nbsp;	            for (int i = 0; i &lt; appt.getRecurNumber()+1; i++) {</b>
+<i>113</i>&nbsp;	                
+<i>114</i>&nbsp;	                //Add the day of occurrence to the list if it is after the first day
+<b class="fc"><i>115</i>&nbsp;	                if (!occurrenceDay.before(firstDay)) {</b>
+<b class="fc"><i>116</i>&nbsp;	                    result.add(occurrenceDay);</b>
+<i>117</i>&nbsp;	                }
+<i>118</i>&nbsp;	                
+<i>119</i>&nbsp;	                //Calculate the next recurrence day
+<b class="fc"><i>120</i>&nbsp;	                occurrenceDay = getNextApptOccurrence(appt, occurrenceDay);</b>
+<b class="fc"><i>121</i>&nbsp;	                if (occurrenceDay == null) {</b>
+<b class="fc"><i>122</i>&nbsp;	                    break;</b>
+<i>123</i>&nbsp;	                }
+<i>124</i>&nbsp;	                            
+<i>125</i>&nbsp;	                //Keep cycling while the occurence day is in range
+<b class="nc"><i>126</i>&nbsp;	                if (!occurrenceDay.before(lastDay)) {</b>
+<b class="nc"><i>127</i>&nbsp;	                    break;</b>
+<i>128</i>&nbsp;	                }
+<i>129</i>&nbsp;	            }        
+<b class="fc"><i>130</i>&nbsp;	        return result;</b>
+<i>131</i>&nbsp;	    }
+<i>132</i>&nbsp;	    /**
+<i>133</i>&nbsp;	     * Calculates the next recurring day in the given appointment. If the 
+<i>134</i>&nbsp;	     * appointment does not recur it returns null. If the date cannot be 
+<i>135</i>&nbsp;	     * calculated for some reason it returns null.
+<i>136</i>&nbsp;	     **/
+<i>137</i>&nbsp;	    private static GregorianCalendar getNextApptOccurrence(Appt appt, 
+<i>138</i>&nbsp;	            GregorianCalendar day) {
+<i>139</i>&nbsp;	        //If the appointment does not recur then return null
+<b class="fc"><i>140</i>&nbsp;	        if (!appt.isRecurring()) {</b>
+<b class="fc"><i>141</i>&nbsp;	            return null;</b>
+<i>142</i>&nbsp;	        }	        
+<i>143</i>&nbsp;	        //Leave the original day untouched.
+<b class="nc"><i>144</i>&nbsp;	        GregorianCalendar nextDay = (GregorianCalendar)day.clone();</b>
+<i>145</i>&nbsp;	        
+<i>146</i>&nbsp;	        //This depends on the recurrence settings
+<b class="nc"><i>147</i>&nbsp;	        switch (appt.getRecurBy()) {</b>
+<i>148</i>&nbsp;	            case Appt.RECUR_BY_WEEKLY:
+<b class="nc"><i>149</i>&nbsp;	                int[] recurDays = appt.getRecurDays();</b>
+<i>150</i>&nbsp;	                
+<i>151</i>&nbsp;	                //If the user specified weekly recurrence and didn&#39;t specify
+<i>152</i>&nbsp;	                //which week days, then assume it is the same week day of the
+<i>153</i>&nbsp;	                //first occurrence
+<b class="nc"><i>154</i>&nbsp;	                if (recurDays.length == 0) {</b>
+<i>155</i>&nbsp;	                    //Add 7 days and return that by default
+<b class="nc"><i>156</i>&nbsp;	                    nextDay.add(nextDay.DAY_OF_MONTH, 7);</b>
+<b class="nc"><i>157</i>&nbsp;	                    return nextDay;</b>
+<i>158</i>&nbsp;	                }
+<i>159</i>&nbsp;	                
+<i>160</i>&nbsp;	                //The user did specify weekly recurrence, so increment the
+<i>161</i>&nbsp;	                //day until it falls on a weekday the user specified
+<b class="nc"><i>162</i>&nbsp;	                for (int k = 0; k &lt; 7; k++) {</b>
+<b class="nc"><i>163</i>&nbsp;	                    nextDay.add(nextDay.DAY_OF_MONTH, 1);</b>
+<b class="nc"><i>164</i>&nbsp;	                    int newDayOfWeek = nextDay.get(nextDay.DAY_OF_WEEK);</b>
+<i>165</i>&nbsp;	                
+<b class="nc"><i>166</i>&nbsp;	                    for (int i = 0; i &lt; recurDays.length; i++) {</b>
+<i>167</i>&nbsp;	                        //If the calendar is set to a day of the week that the
+<i>168</i>&nbsp;	                        //appt recurs on then return that day.
+<b class="nc"><i>169</i>&nbsp;	                        if (recurDays[i] == newDayOfWeek) {</b>
+<b class="nc"><i>170</i>&nbsp;	                            return nextDay;</b>
+<i>171</i>&nbsp;	                        }
+<i>172</i>&nbsp;	                    }
+<i>173</i>&nbsp;	                }
+<i>174</i>&nbsp;	                
+<i>175</i>&nbsp;	                //The loop above should have found a day. If the program 
+<i>176</i>&nbsp;	                //execution is here then the weekdays specified are not in the
+<i>177</i>&nbsp;	                //range of valid Gregorian Calendar Days. Return null here.
+<b class="nc"><i>178</i>&nbsp;	                return null;</b>
+<i>179</i>&nbsp;	            case Appt.RECUR_BY_MONTHLY:
+<i>180</i>&nbsp;	                //Just increment the month and return the day. Not sure what
+<i>181</i>&nbsp;	                //happens when the day is 31 and the next month has 30 days...
+<b class="nc"><i>182</i>&nbsp;	                nextDay.add(nextDay.MONTH, 1);</b>
+<b class="nc"><i>183</i>&nbsp;	                return nextDay;</b>
+<i>184</i>&nbsp;	            case Appt.RECUR_BY_YEARLY:
+<i>185</i>&nbsp;	                //Just increment the year. The only possible problem is an 
+<i>186</i>&nbsp;	                //appointment that recurs on February 29.
+<b class="nc"><i>187</i>&nbsp;	                nextDay.add(nextDay.YEAR, 1);</b>
+<b class="nc"><i>188</i>&nbsp;	                return nextDay;</b>
+<i>189</i>&nbsp;	        }
+<i>190</i>&nbsp;	  
+<b class="nc"><i>191</i>&nbsp;	        return null;</b>
+<i>192</i>&nbsp;	    }
+<i>193</i>&nbsp;
+<i>194</i>&nbsp;	    
+<i>195</i>&nbsp;	    /**
+<i>196</i>&nbsp;	     * Deletes the appointment&#39;s information from the appointments data list. 
+<i>197</i>&nbsp;	     * @return updated list of appointments if the appointment is deleted successfully, otherwise null.
+<i>198</i>&nbsp;	     **/
+<i>199</i>&nbsp;	    public LinkedList&lt;Appt&gt; deleteAppt(LinkedList&lt;Appt&gt; appts,Appt appt) {
+<i>200</i>&nbsp;	    	//Do not do anything to appts equals to null 
+<b class="fc"><i>201</i>&nbsp;	        if(appts==null||appt==null)</b>
+<b class="fc"><i>202</i>&nbsp;        		return null;</b>
+<i>203</i>&nbsp;	    	//Do not do anything to invalid appointments
+<b class="fc"><i>204</i>&nbsp;	        if (!appt.getValid()) {</b>
+<b class="fc"><i>205</i>&nbsp;	            return null;</b>
+<i>206</i>&nbsp;	        }
+<i>207</i>&nbsp;
+<i>208</i>&nbsp;	        //Remove the appointment from the list appts if applicable
+<i>209</i>&nbsp;	        
+<b class="fc"><i>210</i>&nbsp;	        for(int i=1;i&lt;appts.size()-1;i++){</b>
+<b class="fc"><i>211</i>&nbsp;	        	Appt tempAppt=appts.get(i);</b>
+<b class="fc"><i>212</i>&nbsp;	        	if(tempAppt.equals(appt)){</b>
+<b class="fc"><i>213</i>&nbsp;	        		appts.remove(i);</b>
+<b class="fc"><i>214</i>&nbsp;	        		return appts;</b>
+<i>215</i>&nbsp;	        	}
+<i>216</i>&nbsp;	        		
+<i>217</i>&nbsp;	        }
+<b class="fc"><i>218</i>&nbsp;	        return null;</b>
+<i>219</i>&nbsp;	    }
+<i>220</i>&nbsp;	    
+<i>221</i>&nbsp;	    public LinkedList&lt;Appt&gt; permute(LinkedList&lt;Appt&gt; appts, int[] pv){
+<i>222</i>&nbsp;	    	/* pv is an array of integers that specify a permutation (a
+<i>223</i>&nbsp;	    	   rearrangement or shuffling) of the appointments
+<i>224</i>&nbsp;	    	   
+<i>225</i>&nbsp;	    	   If the ith element of pv is k, then the ith element of 
+<i>226</i>&nbsp;	    	   appointments should be placed in the kth position.
+<i>227</i>&nbsp;	    	*/
+<b class="fc"><i>228</i>&nbsp;	    	LinkedList&lt;Appt&gt; apptsUpdatedList=new LinkedList&lt;Appt&gt;(appts);   </b>
+<b class="fc"><i>229</i>&nbsp;	    	if(pv.length != appts.size())</b>
+<b class="fc"><i>230</i>&nbsp;	    	    throw new IllegalArgumentException();</b>
+<i>231</i>&nbsp;
+<b class="fc"><i>232</i>&nbsp;	    	int nexti =  0;</b>
+<b class="fc"><i>233</i>&nbsp;	    	for(int i = 0;i&lt;pv.length;i++){</b>
+<b class="fc"><i>234</i>&nbsp;	    	    int newi = pv[nexti];</b>
+<b class="fc"><i>235</i>&nbsp;	    	    newi = pv[nexti];</b>
+<b class="fc"><i>236</i>&nbsp;	    	   Collections.swap(apptsUpdatedList,newi,newi);</b>
+<b class="fc"><i>237</i>&nbsp;	    	   nexti = newi;</b>
+<i>238</i>&nbsp;	    	} 
+<b class="fc"><i>239</i>&nbsp;     		return apptsUpdatedList;</b>
+<i>240</i>&nbsp;
+<i>241</i>&nbsp;	        }
+<i>242</i>&nbsp;
+<i>243</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-01-29 09:22</div>
+</div>
+</body>
+</html>

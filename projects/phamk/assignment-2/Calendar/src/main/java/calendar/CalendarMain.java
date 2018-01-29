@@ -145,7 +145,7 @@ public class CalendarMain {
 		String tomorrowDate=tomorrow.get(Calendar.MONTH)+ "/"+ tomorrow.get(Calendar.DAY_OF_MONTH)+"/"+tomorrow.get(Calendar.YEAR);
 
 		if(diagnose){
-			System.out.println("today is:" + todatDate tomorrowDate);
+			System.out.println("today is:" + tomorrowDate);
          System.out.println("tomorrow is:" + todatDate); //BUG SWAPPED: todatDate and tomorrowDate
 		}
 		
