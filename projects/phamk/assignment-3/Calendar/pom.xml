@@ -21,6 +21,12 @@
   </dependencies>
   <build>
     <plugins>
+		<!-- Added according to the PIT install guide -->
+		<plugin>
+			<groupId>org.pitest</groupId>
+			<artifactId>pitest-maven</artifactId>
+			<version>LATEST</version>
+		</plugin>
       <plugin>
 	<groupId>org.jacoco</groupId>
 	<artifactId>jacoco-maven-plugin</artifactId>
