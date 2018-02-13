@@ -82,7 +82,6 @@ public class CalDayTest {
 		d.addAppt(appt);
 		String str_day3 = d.toString();
 
-
 		assertNotNull(str_day1);
 		assertNotNull(str_day2);
 		assertNotNull(str_day3);

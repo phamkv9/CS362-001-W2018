@@ -86,6 +86,13 @@ public class ApptTest {
 		assertNotNull(appt.getRecurDays());
 	}
 
+   @Test
+   public void test_compareTo() throws Throwable{
+      Appt appt = new Appt(1, 11, 1, 1, 1, "Title", "Description");
+      Appt appt_2 = new Appt(2, 22, 2, 2, 2, "Title 2", "Description 2");
+      assertEquals(15, appt_2.compareTo(appt));
+   }
+   
 	@Test
 	public void test_setters() throws Throwable{
 		Appt appt = new Appt(1, 1, 1, 1, 1, "default", "simple default set up");
@@ -112,4 +119,19 @@ public class ApptTest {
 
 		assertTrue(appt.getValid());
 	}
+   
+   @Test
+   public void letters_toString() throws Throwable{
+      Appt am_appt = new Appt(1, 11, 1, 1, 1, "Title", "Description");   //Valid AM appointment
+      assertEquals("\t1/1/1 at 1:11am ,Title, Description\n", am_appt.toString());
+      
+      Appt pm_appt = new Appt(14, 11, 1, 1, 1, "Title", "Description");   //Valid PM appointment
+      assertEquals("\t1/1/1 at 2:11pm ,Title, Description\n", pm_appt.toString());
+      
+      Appt midnight_appt = new Appt(0, 11, 1, 1, 1, "Title", "Description");   //Valid 12AM appointment
+      assertEquals("\t1/1/1 at 12:11am ,Title, Description\n", midnight_appt.toString());
+      
+      Appt invalid_appt = new Appt(1, -1, 1, 1, 1, "Title", "Description");   //Invalid appointment
+      assertNull(invalid_appt.toString());
+   }
 }
