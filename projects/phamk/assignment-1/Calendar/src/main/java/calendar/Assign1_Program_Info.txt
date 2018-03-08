@@ -1,0 +1,44 @@
+	Calendar
+
+- Summary: Overall, set up an appointment that keeps track of time & date with checks to make sure that it's correct and not going to cause an error like: 
+	start date: 10/5/19
+	end date: 10/1/19
+
+------------------------------------------------------------------
+
+CalendarUtil.Java
+
+
+Summary: Creates the basically essentials to get the Calendar started prior to starting to do appointments
+
+Precondition: if year >= 0, 1 <= month <= 12
+
+Postcondition: gives back the number of days that each month, as well as each year. Check starts check if it's a leap year or not, and whether it's a 28, 29, 30 or 31 day month.
+
+------------------------------------------------------------------
+
+Appt.Java
+
+Summary: Setting up an appointment with the informations needed including time, date, description & title.
+
+Precondition: CalendarUtil is passed with information regarding the days per month and such. Hours 0 <= 23, Minute 0 <= 59, Month 1<= 12. Clarification between AM and PM
+
+Postcondition: goes through and checks that the information inputs matches the validity to be used & set up start dates for the appointments on the calendar + reoccurences.
+
+------------------------------------------------------------------
+
+CalDay.Java
+
+Summary: deals with the storing of the appointments after the Calendar has been created & appointment check for error have been made (appt.java & calendarUtil.java) Can collect several different appointments as well, using Linked List to hold the information Called through (ascending order, in appt.Java)
+
+Precondition: Link together appointments. Collect informations such as time, date to order. Month + day + year = MM/DD/YYYY (string).
+
+Postcondition: arrange appointments in order by time (first to last). Also print out statements that show the information regarding the appointment. (Details: date, time, title, description)
+
+------------------------------------------------------------------
+
+DateOutofRangeException.java
+
+Summary: 
+
+

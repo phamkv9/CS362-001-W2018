@@ -1,0 +1,14 @@
+Assignment 5 Bugs
+Kevin Pham
+
+Coder: Vincent Nguyen
+
+Bugs found with TimeTable.java
+
+Function: getApptRange
+Line Locate: 53
+Problem: i <= appts.size(), where it's suppose to be i < appts.size() STRICTLY.
+
+Function: deleteAppt
+Line Locate: 201
+Problem: There is no !, it's basically saying if both appts and appt are == null, in some cases there shouldn't be but it does not reflect that.

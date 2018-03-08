@@ -1,0 +1,147 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: CalendarUtil</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">calendar</a> ]
+</div>
+
+<h1>Coverage Summary for Class: CalendarUtil (calendar)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">CalendarUtil</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    75%
+  </span>
+  <span class="absValue">
+    (3/ 4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    53.8%
+  </span>
+  <span class="absValue">
+    (7/ 13)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;/**
+<i>2</i>&nbsp;*	CalendarUtil.java
+<i>3</i>&nbsp;**/
+<i>4</i>&nbsp;
+<i>5</i>&nbsp;package calendar;
+<i>6</i>&nbsp;
+<i>7</i>&nbsp;
+<i>8</i>&nbsp;/**
+<i>9</i>&nbsp;*	A class containing utility methods that a calendar might
+<i>10</i>&nbsp;*	need to function
+<i>11</i>&nbsp;*	
+<i>12</i>&nbsp;**/
+<b class="nc"><i>13</i>&nbsp;public class CalendarUtil {</b>
+<i>14</i>&nbsp;	
+<i>15</i>&nbsp;	/** integers specifying the number of days in each month **/
+<b class="fc"><i>16</i>&nbsp;	public static int DaysInMonth[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};</b>
+<i>17</i>&nbsp;	
+<i>18</i>&nbsp;	/** static var used for February **/
+<i>19</i>&nbsp;	public static final int FEBRUARY = 1;
+<i>20</i>&nbsp;
+<i>21</i>&nbsp;	/** 
+<i>22</i>&nbsp;	*	Get number of days in specified year and month
+<i>23</i>&nbsp;	*	
+<i>24</i>&nbsp;	*	@param year the year in integer form
+<i>25</i>&nbsp;	*	@param month the month in integer form (0 is January, etc...)
+<i>26</i>&nbsp;	*	@return the number of days in the specified month and year
+<i>27</i>&nbsp;	**/
+<i>28</i>&nbsp;	public static int NumDaysInMonth(int year, int month) {
+<i>29</i>&nbsp;		
+<b class="fc"><i>30</i>&nbsp;		int baseDays = DaysInMonth[month];</b>
+<i>31</i>&nbsp;	
+<b class="fc"><i>32</i>&nbsp;		if(IsLeapYear(year) &amp;&amp; (month == FEBRUARY)) {</b>
+<b class="nc"><i>33</i>&nbsp;				baseDays = baseDays + 1;</b>
+<i>34</i>&nbsp;		}
+<i>35</i>&nbsp;	
+<b class="fc"><i>36</i>&nbsp;		return baseDays;</b>
+<i>37</i>&nbsp;	}
+<i>38</i>&nbsp;	/**
+<i>39</i>&nbsp;	*	Determines if the specified year is a Leap Year
+<i>40</i>&nbsp;	*	
+<i>41</i>&nbsp;	*	@param year the year
+<i>42</i>&nbsp;	*	@return true if the year is a Leap Year, false otherwise
+<i>43</i>&nbsp;	**/
+<i>44</i>&nbsp;	public static boolean IsLeapYear(int year) {
+<i>45</i>&nbsp;	//if the year is a multiple of 100, the year is a leap year if its also a multiple of 400
+<b class="fc"><i>46</i>&nbsp;		if ((year % 100) == 0) {</b>
+<i>47</i>&nbsp;			
+<b class="nc"><i>48</i>&nbsp;			if((year % 400) == 0) {</b>
+<b class="nc"><i>49</i>&nbsp;				return true;</b>
+<i>50</i>&nbsp;			}
+<i>51</i>&nbsp;			else{
+<b class="nc"><i>52</i>&nbsp;				return false;</b>
+<i>53</i>&nbsp;			}
+<i>54</i>&nbsp;		}
+<i>55</i>&nbsp;	
+<i>56</i>&nbsp;		//year is also leap year if multiple of 4
+<b class="fc"><i>57</i>&nbsp;		if ((year % 4) == 0) {</b>
+<b class="nc"><i>58</i>&nbsp;			return true;</b>
+<i>59</i>&nbsp;		}
+<i>60</i>&nbsp;		else{
+<b class="fc"><i>61</i>&nbsp;			return false;</b>
+<i>62</i>&nbsp;		}
+<i>63</i>&nbsp;	}
+<i>64</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2018-01-29 09:22</div>
+</div>
+</body>
+</html>
